@@ -4,7 +4,12 @@ console.log(response)
 const works = await response.json()
 console.log(works)
 
-function generWorks(){
+const respbis = await fetch("http://localhost:5678/api/categories/")
+console.log(respbis)
+const categories = await respbis.json()
+console.log(categories) 
+
+function generWorks(works){
 
     for (let i = 0; i < works.length; i++){
         const figure = works[i]
@@ -28,8 +33,45 @@ function generWorks(){
         console.log(worksElement)
         console.log(imageElement)
         console.log(titleElement)
+        
+        const categoryId = figure.category
+        console.log(categoryId)
+        
     }
 }
 
-generWorks()
+generWorks(works)
+
+const filters = document.querySelector(".filter")
+const filterI = document.createElement("input")
+filterI.setAttribute("type", "submit")
+filterI.setAttribute("value", "Tous")
+filters.appendChild(filterI)
+console.log(filterI)
+
+for ( let i = 0; i<categories.length; i++){
+    const input = categories[i]
+    console.log(input)
+    
+    const filterI = document.createElement("input")
+    filterI.setAttribute("type", "submit")
+    filterI.setAttribute("value",input.name)
+    filters.appendChild(filterI)
+    console.log(filterI)
+    
+    const id = input.id
+    console.log(id)
+    
+    filterI.addEventListener("click", () => {
+        console.log("click")
+        const filterCategory = works.filter(function(work){
+            return work.categoryId === id
+        })
+        console.log(filterCategory)
+        document.querySelector(".gallery").innerHTML = ""
+        generWorks(filterCategory)
+
+    })
+    
+}
 
