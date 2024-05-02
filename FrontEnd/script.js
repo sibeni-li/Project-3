@@ -9,6 +9,7 @@ console.log(respbis)
 const categories = await respbis.json()
 console.log(categories) 
 
+//Fonction qui va générer les travaux
 function generWorks(works){
 
     for (let i = 0; i < works.length; i++){
@@ -42,19 +43,27 @@ function generWorks(works){
 
 generWorks(works)
 
+//Récupération de l'élément du DOM qui va accueillir les filtres
 const filters = document.querySelector(".filter")
+//Création de balises dédiées aux filtres
 const filterI = document.createElement("input")
-filterI.setAttribute("type", "submit")
+filterI.setAttribute("type", "button")
 filterI.setAttribute("value", "Tous")
+//On rattache la balise input à la div .filter
 filters.appendChild(filterI)
 console.log(filterI)
+
+filterI.addEventListener("click", () => {
+    document.querySelector(".gallery").innerHTML = ""
+    generWorks(works)
+})
 
 for ( let i = 0; i<categories.length; i++){
     const input = categories[i]
     console.log(input)
     
     const filterI = document.createElement("input")
-    filterI.setAttribute("type", "submit")
+    filterI.setAttribute("type", "button")
     filterI.setAttribute("value",input.name)
     filters.appendChild(filterI)
     console.log(filterI)
