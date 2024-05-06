@@ -94,9 +94,16 @@ nav li {
 	font-size: 1.2em;
 }
 
-li:hover {
+li:hover,
+ a:hover {
 	color: #B1663C;
 }
+
+li a {
+	text-decoration: none;
+	color: black;
+}
+
 #introduction {
 	display: flex;
 	align-items: center;
@@ -125,12 +132,30 @@ li:hover {
 	text-align: center;
 }
 
-input[type="button"]{
+.noClick{
 	font-family: 'Syne';
 	font-size: 16px;
 	font-weight: 700;
 	color: #1D6154;
 	background-color: white;
+	padding: 9px 21px ;
+	margin : 2em 10px ;
+	text-align: center;
+	border: solid 1px #1D6154;
+	border-radius: 60px;
+}
+
+.noClick:hover{
+	color: white;
+	background-color: #1D6154;
+}
+
+.click {
+	font-family: 'Syne';
+	font-size: 16px;
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
 	padding: 9px 21px ;
 	margin : 2em 10px ;
 	text-align: center;
