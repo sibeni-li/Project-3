@@ -10,6 +10,7 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<link rel="stylesheet" href="./assets/connexion.css">
+    <script type="module" src="connexion.js"></script>
 </head>
 <body>
     <header>
@@ -18,15 +19,15 @@
             <ul>
                 <li>projets</li>
                 <li>contact</li>
-                <li>login</li>
+                <li class="login">login</li>
                 <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
     </header>
     <main>
-        <div id="login">
+        <div id="log">
             <h2>Log In</h2>
-            <form >
+            <form id="connexion">
                 <div>
                     <label for="email">E-mail</label>
                     <input type="email" name="email" id="email">
@@ -35,7 +36,7 @@
                     <label for="password">Mot de passe</label>
                     <input type="password" name="password" id="password">
                 </div>
-                <div id="connexion">
+                <div >
                     <input type="submit" value="Se connecter">
                 </div>
                 <div id="forgot">
