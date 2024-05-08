@@ -1,29 +1,34 @@
-// fetch("http://localhost:5678/api/users/login",{
-//     method : "POST",
-//     headers : "Content-Type: application/json",
-
-// })
-//Récupération des élément du DOM qui accueillent le formulaire de connexion
 const form = document.getElementById("connexion")
-const baliseEmail = document.getElementById("email")
-const balisePassword = document.getElementById("password")
-console.log(form)
 
-//Fonction qui vérifie les identifiants de connexion
-function verifyLogin(email, password) {
-    if (email === "test@test.fr" && password === "1234"){
-        //Redirige vers la page d'accueil si les identifiants sont corrects
-        window.location.href = "index.html"
-    }else{
-        //Affiche un message d'erreur si la combinaison utilisateur/mdp est fausse
-        alert("Erreur de connexion")
-    }
+function verifyLogin (username, password) {
+    const data = {"email": username, "password": password}
+    console.log(data)
+
+    fetch("http://localhost:5678/api/users/login", {
+        method: "POST",
+        headers: {
+            "accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.token){
+            window.location.href = "index.html"
+        }else {
+            alert("Erreur dans l'identifiant ou le mot de passe")
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
-//Récupère la valeur entrée pqr l'utilisateur et appelle la fonction verifyLogin à l'envoi du formulaire
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", (event) =>{
     event.preventDefault()
-    const email = baliseEmail.value
-    const password = balisePassword.value
-    verifyLogin(email, password)
+    const username = document.getElementById("email").value
+    const password = document.getElementById("password").value
+    console.log(username)
+    console.log(password)
+    verifyLogin(username, password)
+    
 })
