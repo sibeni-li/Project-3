@@ -230,3 +230,24 @@ footer nav ul {
 	margin: 2em;
 }
 
+/* Mode édition */
+.editMode{
+	background-color: black;
+	color: white;
+	height: 39px;
+	text-align: center;
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+}
+
+.fa-pen-to-square {
+	width: 15px;
+	height: 15px;
+}
+h2 a, h2 i {
+	color: black;
+	font-size: 14px;
+
+}
