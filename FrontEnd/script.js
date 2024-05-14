@@ -1,217 +1,229 @@
 //Récupération des données de l'API
-const response = await fetch("http://localhost:5678/api/works")
-console.log(response)
-const works = await response.json()
-console.log(works)
+const response = await fetch("http://localhost:5678/api/works");
+console.log(response);
+const works = await response.json();
+console.log(works);
 
-const respbis = await fetch("http://localhost:5678/api/categories/")
-console.log(respbis)
-const categories = await respbis.json()
-console.log(categories) 
+const respbis = await fetch("http://localhost:5678/api/categories/");
+console.log(respbis);
+const categories = await respbis.json();
+console.log(categories);
 
 //Récupération du token dans le Local Storage
-const token = window.localStorage.getItem("token")
+const token = window.localStorage.getItem("token");
 
 //Si le token est présent, mise à jour du html pour passer en mode édition. Si non, création des filtres
 if(token){
-    console.log(token)
+    console.log(token);
 
-    const body = document.querySelector("body")
-    const header = document.querySelector("header")
-    const div = document.createElement("div")
-    div.setAttribute("class", "editMode")
-    const icon = document.createElement("i")
-    icon.setAttribute("class", "fa-regular fa-pen-to-square")
-    const p = document.createElement("p")
-    p.innerText = "Mode édition"
-    body.appendChild(div)
-    div.appendChild(icon)
-    div.appendChild(p)
-    header.before(div)
+    const body = document.querySelector("body");
+    const header = document.querySelector("header");
+    const div = document.createElement("div");
+    div.setAttribute("class", "editMode");
+    const icon = document.createElement("i");
+    icon.setAttribute("class", "fa-regular fa-pen-to-square");
+    const p = document.createElement("p");
+    p.innerText = "Mode édition";
+    body.appendChild(div);
+    div.appendChild(icon);
+    div.appendChild(p);
+    header.before(div);
     
-    const navEdit = document.querySelector("nav li a")
-    navEdit.remove()
-    const logout = document.createElement("li")
-    const logOut = document.createElement("a")
-    logOut.setAttribute("href", "index.html")
-    logOut.innerText = "logout"
-    const nav = document.querySelector("nav ul")
-    const insta = document.querySelector(".insta")
-    nav.appendChild(logout)
-    logout.appendChild(logOut)
-    insta.before(logout)
+    const navEdit = document.querySelector("nav li a");
+    navEdit.remove();
+    const logout = document.createElement("li");
+    const logOut = document.createElement("a");
+    logOut.setAttribute("href", "index.html");
+    logOut.innerText = "logout";
+    const nav = document.querySelector("nav ul");
+    const insta = document.querySelector(".insta");
+    nav.appendChild(logout);
+    logout.appendChild(logOut);
+    insta.before(logout);
 
     logout.addEventListener("click", () =>{
-        window.localStorage.removeItem("token")
-    })
+        window.localStorage.removeItem("token");
+    });
 
-    const portfolio = document.querySelector("#portfolio h2")
-    const span = document.createElement("span")
-    const a = document.createElement("a")
-    a.setAttribute("href", "#modal")
-    a.setAttribute("class", "js-modal")
-    a.innerText = "modifier"
-    const iconn = document.createElement("i")
-    iconn.setAttribute("class", "fa-regular fa-pen-to-square")
-    portfolio.appendChild(span)
-    span.appendChild(iconn)
-    span.appendChild(a)
+    const portfolio = document.querySelector("#portfolio h2");
+    const span = document.createElement("span");
+    const a = document.createElement("a");
+    a.setAttribute("href", "#modal");
+    a.setAttribute("class", "js-modal");
+    a.innerText = "modifier";
+    const iconn = document.createElement("i");
+    iconn.setAttribute("class", "fa-regular fa-pen-to-square");
+    portfolio.appendChild(span);
+    span.appendChild(iconn);
+    span.appendChild(a);
     
 } else {
     
     //Fonction qui crée les boutons "filtres" et qui active l'écouteur d'évènement
     function createFilterButton(value, isAll) {
-        const filterI = document.createElement("input")
-        filterI.setAttribute("type", "button")
-        filterI.setAttribute("value", value)
-        filterI.classList.add("noClick")
+        const filterI = document.createElement("input");
+        filterI.setAttribute("type", "button");
+        filterI.setAttribute("value", value);
+        filterI.classList.add("noClick");
         
         if (isAll) {
             filterI.addEventListener("click", () => {
-                document.querySelector(".gallery").innerHTML = ""
-                generWorks(works)
-                filterClass(filterI)
-            })
+                document.querySelector(".gallery").innerHTML = "";
+                generWorks(works);
+                filterClass(filterI);
+            });
         } else {
-            const id = categories.find((cat) => cat.name === value).id
+            const id = categories.find((cat) => cat.name === value).id;
             filterI.addEventListener("click", () => {
-                const filterCategory = works.filter((work) => work.categoryId === id)
-                document.querySelector(".gallery").innerHTML = ""
-                generWorks(filterCategory)
-                filterClass(filterI)
-            })
-        }
+                const filterCategory = works.filter((work) => work.categoryId === id);
+                document.querySelector(".gallery").innerHTML = "";
+                generWorks(filterCategory);
+                filterClass(filterI);
+            });
+        };
         
-        return filterI
-    }
+        return filterI;
+    };
     
     //Fonction qui ajoute la classe .click et enlève la classe .noClick sur le filtre sélectionné et inversément sur les filtres non sélectionnés
     function filterClass(filterElement) {
-        const allFilters = document.querySelectorAll(".filter input")
+        const allFilters = document.querySelectorAll(".filter input");
         allFilters.forEach((filter) => {
-            filter.classList.remove("click")
-            filter.classList.add("noClick")
-        })
+            filter.classList.remove("click");
+            filter.classList.add("noClick");
+        });
         
-        filterElement.classList.remove("noClick")
-        filterElement.classList.add("click")
-    }
+        filterElement.classList.remove("noClick");
+        filterElement.classList.add("click");
+    };
     
     //Fonction qui crée les filtres
     function createFilters(categories) {
-        const filters = document.querySelector(".filter")
-        const filterAll = createFilterButton("Tous", true)
-        filters.appendChild(filterAll)
+        const filters = document.querySelector(".filter");
+        const filterAll = createFilterButton("Tous", true);
+        filters.appendChild(filterAll);
         
         categories.forEach((input) => {
-            const filter = createFilterButton(input.name, false)
-            filters.appendChild(filter)
-        })
+            const filter = createFilterButton(input.name, false);
+            filters.appendChild(filter);
+        });
     }
     
     function filters(categories) {
-        createFilters(categories)
-    }
+        createFilters(categories);
+    };
     
-    filters(categories)
+    filters(categories);
     
-}
+};
 
 //Fonction qui va générer les travaux
 function generWorks(works) {
     works.forEach((figure) => {
-        console.log(figure)
+        console.log(figure);
         //Récupère l'élément du DOM qui va accueillir les travaux de l'architecte
-        const divGallery = document.querySelector(".gallery")
+        const divGallery = document.querySelector(".gallery");
         //Crée une balise dédiée à un des travaux
-        const worksElement = document.createElement("figure")
+        const worksElement = document.createElement("figure");
         
-        const imageElement = document.createElement("img")
-        imageElement.src = figure.imageUrl
+        const imageElement = document.createElement("img");
+        imageElement.src = figure.imageUrl;
         
-        const titleElement = document.createElement("figcaption")
-        titleElement.innerText = figure.title
+        const titleElement = document.createElement("figcaption");
+        titleElement.innerText = figure.title;
         //Rattache la balise figure à la div .gallery
-        divGallery.appendChild(worksElement)
+        divGallery.appendChild(worksElement);
         //Rattache l'image et le titre à la balise figure
-        worksElement.appendChild(imageElement)
-        worksElement.appendChild(titleElement)
+        worksElement.appendChild(imageElement);
+        worksElement.appendChild(titleElement);
         
-        console.log(worksElement)
-        console.log(imageElement)
-        console.log(titleElement)
+        console.log(worksElement);
+        console.log(imageElement);
+        console.log(titleElement);
         
-        const categoryId = figure.category
-        console.log(categoryId)
-    })
-}
+        const categoryId = figure.category;
+        console.log(categoryId);
+    });
+};
 
-generWorks(works)
+generWorks(works);
 
-let modal = null
-const focusableSelector= "button, a, input, textarea"
-let focusables =[]
-let previouslyFocusElement = null
+let modal = null;
+
+const focusableSelector= "button, a, input, textarea";
+let focusables =[];
+let previouslyFocusElement = null;
 
 const openModal = function (e) {
-    e.preventDefault()
-    modal = document.querySelector(e.target.getAttribute("href"))
-    focusables = Array.from(modal.querySelectorAll(focusableSelector))
-    previouslyFocusElement = document.querySelector(":focus")
-    modal.style.display = null
-    focusables[0].focus()
-    modal.removeAttribute("aria-hidden")
-    modal.setAttribute("aria-modal", "true")
-    modal.addEventListener("click", closeModal)
-    modal.querySelector(".js-close-modal").addEventListener("click", closeModal)
-    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation)
-}
+    e.preventDefault();
+    modal = document.querySelector(e.target.getAttribute("href"));
+    focusables = Array.from(modal.querySelectorAll(focusableSelector));
+    previouslyFocusElement = document.querySelector(":focus");
+    modal.style.display = null;
+    focusables[0].focus();
+    modal.removeAttribute("aria-hidden");
+    modal.setAttribute("aria-modal", "true");
+    modal.addEventListener("click", closeModal);
+    modal.querySelector(".js-close-modal").addEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
+    modal.querySelector(".js-modal2").addEventListener("click", (event) => {
+        const modal1 = modal.querySelector("#modal1");
+        const modal2 = modal.querySelector("#modal2");
+        if(modal2.style.display === "none"){
+            modal1.style.display = "none";
+            modal2.style.display = "block";
+        }else{
+            modal2.style.display = "none";
+            modal1.style.display = "block";
+        };
+    });
+};
 
 const closeModal = function (e) {
-    if (modal === null) return
+    if (modal === null) return;
     if (previouslyFocusElement !== null) {
-        previouslyFocusElement.focus()
+        previouslyFocusElement.focus();
     }
-    e.preventDefault()
-    modal.style.display = "none"
-    modal.setAttribute("aria-hidden", "true")
-    modal.removeAttribute("aria-modal")
-    modal.removeEventListener("click", closeModal)
-    modal.querySelector(".js-close-modal").removeEventListener("click", closeModal)
-    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation)
-    modal = null
-}
+    e.preventDefault();
+    modal.style.display = "none";
+    modal.setAttribute("aria-hidden", "true");
+    modal.removeAttribute("aria-modal");
+    modal.removeEventListener("click", closeModal);
+    modal.querySelector(".js-close-modal").removeEventListener("click", closeModal);
+    modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
+    modal = null;
+};
 
 const stopPropagation = function (e){
-    e.stopPropagation()
-}
+    e.stopPropagation();
+};
 
 const focusInModal = function (e){
-    e.preventDefault()
-    let index = focusables.findIndex(f => f === modal.querySelector(":focus"))
+    e.preventDefault();
+    let index = focusables.findIndex(f => f === modal.querySelector(":focus"));
     if (e.shiftKey === true){
-        index --
+        index --;
     }else{
-        index ++
-    }
+        index ++;
+    };
     if (index >= focusables.length) {
-        index = 0
-    }
+        index = 0;
+    };
     if (index < 0){
-        index = focusables.length -1
-    }
-    focusables[index].focus()
-}
+        index = focusables.length -1;
+    };
+    focusables[index].focus();
+};
 
 document.querySelectorAll(".js-modal").forEach(a =>{
-    a.addEventListener("click", openModal)
-})
+    a.addEventListener("click", openModal);
+});
 
 window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
-        closeModal(e)
-    }
+        closeModal(e);
+    };
     if (e.key === "Tab" && modal !== null){
-        focusInModal(e)
-    }
-})
+        focusInModal(e);
+    };
+});
