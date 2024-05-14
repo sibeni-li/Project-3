@@ -69,75 +69,75 @@
 	</footer>
 
 	<section id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="title-modal" style="display: none;">
-		<div class="modal-wrapper js-modal-stop">
-			<div class="button">
+		<div class="modal-wrapper js-modal-stop" id="modal1">
+			<div class="close-modal">
 				<button class="js-close-modal close-modal">
 					<i class="fa-solid fa-xmark"></i>
 				</button>
 			</div>
 			<h1 id="title-modal">Galerie Photo</h1>
 			<div class="images">
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/abajour-tahina.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/appartement-paris-v.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/restaurant-sushisen-londres.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/la-balisiere.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/structures-thermopolis.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/appartement-paris-x.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/le-coteau-cassis.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/villa-ferneze.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/appartement-paris-xviii.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
 					<img src="/assets/images/bar-lullaby-paris.png">
 				</div>
-				<div>
+				<div class="work-img">
 					<div class="delete-work">
 						<i class="fa-solid fa-trash-can"></i>
 					</div>
@@ -145,13 +145,42 @@
 				</div>
 			</div>
 			<div  id="validate">
-
-				<a href="#modal2" class="js-modal">
+				<a href="#modal2" class="js-modal2">
 					<input type="submit" value="Ajouter une photo">
 				</a>
 			</div>
 		</div>
-		
+		<div class="modal-wrapper js-modal-stop" id="modal2" style="display: none;">
+			<div class="button-modal-2">
+				<a href="#modal1" >
+					<i class="fa-solid fa-arrow-left"></i>
+				</a>
+				<button class="js-close-modal close-modal">
+					<i class="fa-solid fa-xmark"></i>
+				</button>
+			</div>
+			<h1>Ajout photo</h1>
+			<div class="add-photo">
+				<button class="p">
+					<i class="fa-regular fa-image"></i>
+					<input type="file">
+					<p>+ Ajouter photo</p>
+				</button>
+			</div>
+			<div class="add-title-category">	
+				<label for="title">Titre</label>
+				<input type="text" class="title" id="title">
+				<label for="category">Catégorie</label>
+				<select name="category" class="category">
+					<option value="Objets"></option>
+					<option value="Appartements"></option>
+					<option value="Hotels & restaurants"></option>
+				</select>
+			</div>
+			<div id="validate">
+				<input type="submit" value="Valider">
+			</div>
+		</div>
 	</section>
 </body>
 </html>
