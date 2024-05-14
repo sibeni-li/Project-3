@@ -166,6 +166,15 @@ li a {
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+}
+
+#portfolio h2 span{
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 
 .gallery {
@@ -249,7 +258,7 @@ footer nav ul {
 h2 a, h2 i {
 	color: black;
 	font-size: 14px;
-
+	text-decoration: none;
 }
 
 /*modale*/
@@ -285,15 +294,24 @@ h2 a, h2 i {
 	gap: 50px;
 }
 
+#modal2 {
+	gap: 30px;
+}
+
 .close-modal {
 	background-color: #ffff;
 	border: none;
-	width: 24px;
-}
-
-.button {
 	display: flex;
 	justify-content: end;
+}
+
+.button-modal-2 {
+	display: flex;
+	justify-content: space-between;
+}
+
+.button-modal-2 a {
+	color: black;
 }
 
 .modal h1 {
@@ -337,6 +355,40 @@ h2 a, h2 i {
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.add-photo {
+	display: flex;
+	justify-content: center;
+}
+
+.add-title-category {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 0 100px;
+	text-align: initial;
+}
+
+.title, .category {
+	height: 51px;
+	background-color: white;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09)
+	d
+}
+
+.p{
+	position: relative;
+	background-color: #E8F1F6;
+	border: none;
+	border-radius: 10px;
+	width: 420px;
+	height: 169px;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .p, button p {
