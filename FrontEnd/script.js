@@ -149,34 +149,23 @@ function generWorks(works) {
 generWorks(works);
 
 let modal = null;
-
+const modal1 = document.querySelector("#modal1");
+const modal2 = document.querySelector("#modal2");
 const focusableSelector= "button, a, input, textarea";
 let focusables =[];
 let previouslyFocusElement = null;
 
 const openModal = function (e) {
     e.preventDefault();
-    modal = document.querySelector(e.target.getAttribute("href"));
+    modal = document.querySelector("#modal");
     focusables = Array.from(modal.querySelectorAll(focusableSelector));
     previouslyFocusElement = document.querySelector(":focus");
     modal.style.display = null;
     focusables[0].focus();
     modal.removeAttribute("aria-hidden");
     modal.setAttribute("aria-modal", "true");
-    modal.addEventListener("click", closeModal);
     modal.querySelector(".js-close-modal").addEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
-    modal.querySelector(".js-modal2").addEventListener("click", (event) => {
-        const modal1 = modal.querySelector("#modal1");
-        const modal2 = modal.querySelector("#modal2");
-        if(modal2.style.display === "none"){
-            modal1.style.display = "none";
-            modal2.style.display = "block";
-        }else{
-            modal2.style.display = "none";
-            modal1.style.display = "block";
-        };
-    });
 };
 
 const closeModal = function (e) {
@@ -186,15 +175,17 @@ const closeModal = function (e) {
     }
     e.preventDefault();
     modal.style.display = "none";
+    modal2.style.display = "none";
+    modal1.style.display = "flex";
     modal.setAttribute("aria-hidden", "true");
     modal.removeAttribute("aria-modal");
-    modal.removeEventListener("click", closeModal);
     modal.querySelector(".js-close-modal").removeEventListener("click", closeModal);
     modal.querySelector(".js-modal-stop").removeEventListener("click", stopPropagation);
-    modal = null;
+    
 };
 
-const stopPropagation = function (e){
+
+const stopPropagation = function (e) {
     e.stopPropagation();
 };
 
@@ -215,8 +206,32 @@ const focusInModal = function (e){
     focusables[index].focus();
 };
 
-document.querySelectorAll(".js-modal").forEach(a =>{
-    a.addEventListener("click", openModal);
+document.querySelectorAll(".js-modal").forEach(link => {
+    link.addEventListener("click", openModal);
+});
+
+document.querySelectorAll(".js-close-modal").forEach(button => {
+    button.addEventListener("click", closeModal);
+});
+
+document.querySelectorAll(".js-modal2").forEach(button => {
+    button.addEventListener("click", (event) => {
+            modal1.style.display = "none";
+            modal2.style.display = "flex";
+    });
+});
+
+document.querySelectorAll(".js-show-vue-1").forEach(button => {
+    button.addEventListener("click", () => {
+        modal1.style.display = "flex";
+        modal2.style.display = "none";
+    })
+})
+
+window.addEventListener("click", function (event) {
+    if (event.target === document.querySelector(".modal")) {
+        closeModal(event);
+    };
 });
 
 window.addEventListener("keydown", function (e) {
