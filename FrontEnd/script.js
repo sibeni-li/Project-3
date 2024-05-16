@@ -125,6 +125,7 @@ function generWorks(works) {
         const divGallery = document.querySelector(".gallery");
         //Crée une balise dédiée à un des travaux
         const worksElement = document.createElement("figure");
+        worksElement.setAttribute("data-id", figure.id)
         
         const imageElement = document.createElement("img");
         imageElement.src = figure.imageUrl;
@@ -151,10 +152,11 @@ generWorks(works);
 function generImg(works) {
     works.forEach((image) =>{
         const divImages = document.querySelector(".images");
-
     
         const workImg = document.createElement("div");
         workImg.setAttribute("class", "work-img");
+        workImg.setAttribute('data-id', image.id)
+
 
         const deleteWork = document.createElement("div");
         deleteWork.setAttribute("class", "delete-work");
@@ -255,8 +257,8 @@ document.querySelectorAll(".js-close-modal").forEach(button => {
 
 document.querySelectorAll(".js-modal2").forEach(button => {
     button.addEventListener("click", (event) => {
-            modal1.style.display = "none";
-            modal2.style.display = "flex";
+        modal1.style.display = "none";
+        modal2.style.display = "flex";
     });
 });
 
@@ -281,3 +283,27 @@ window.addEventListener("keydown", function (e) {
         focusInModal(e);
     };
 });
+
+const deleteElement = document.querySelectorAll(".fa-trash-can")
+for (let i = 0; i<works.length; i++){
+    deleteElement[i].addEventListener("click", async function (e) {
+        e.preventDefault();
+        fetch("http://localhost:5678/api/works/"+works[i].id , {
+            method : "DELETE",
+            headers : {
+                "accept": "*/*",
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(respDelete => {
+            if(respDelete.ok) {
+                console.log(respDelete);
+                this.closest(".work-img").remove();
+                location.reload(response);
+                // document.querySelector(".gallery").innerHTML = "";
+                // generWorks(works);
+            };
+        })
+        .catch(error => console.error("Erreur lors de la suppression :", error));
+    });
+};
