@@ -148,6 +148,45 @@ function generWorks(works) {
 
 generWorks(works);
 
+function generImg(works) {
+    works.forEach((image) =>{
+        const divImages = document.querySelector(".images");
+
+    
+        const workImg = document.createElement("div");
+        workImg.setAttribute("class", "work-img");
+
+        const deleteWork = document.createElement("div");
+        deleteWork.setAttribute("class", "delete-work");
+
+        const trash = document.createElement("i");
+        trash.setAttribute("class", "fa-solid fa-trash-can");
+
+        const workImgElement = document.createElement("img");
+        workImgElement.src = image.imageUrl;
+
+        divImages.appendChild(workImg);
+        workImg.appendChild(deleteWork);
+        workImg.appendChild(workImgElement);
+        deleteWork.appendChild(trash);
+    });
+};
+
+generImg(works);
+
+function generMdoalCategory(categories){
+    categories.forEach((categ) => {
+        const selectCategory = document.querySelector(".category");
+
+        const nameCategory = document.createElement("option");
+        nameCategory.innerText = categ.name;
+
+        selectCategory.appendChild(nameCategory);
+    });
+};
+
+generMdoalCategory(categories);
+
 let modal = null;
 const modal1 = document.querySelector("#modal1");
 const modal2 = document.querySelector("#modal2");
