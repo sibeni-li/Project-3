@@ -99,11 +99,6 @@ li:hover,
 	color: #B1663C;
 }
 
-li a {
-	text-decoration: none;
-	color: black;
-}
-
 #introduction {
 	display: flex;
 	align-items: center;
@@ -128,53 +123,12 @@ li a {
 	margin-bottom: 0.5em;
 }
 
-.filter {
-	text-align: center;
-}
-
-.noClick{
-	font-family: 'Syne';
-	font-size: 16px;
-	font-weight: 700;
-	color: #1D6154;
-	background-color: white;
-	padding: 9px 21px ;
-	margin : 2em 10px ;
-	text-align: center;
-	border: solid 1px #1D6154;
-	border-radius: 60px;
-}
-
-.noClick:hover{
-	color: white;
-	background-color: #1D6154;
-}
-
-.click {
-	font-family: 'Syne';
-	font-size: 16px;
-	font-weight: 700;
-	color: white;
-	background-color: #1D6154;
-	padding: 9px 21px ;
-	margin : 2em 10px ;
-	text-align: center;
-	border: solid 1px #1D6154;
-	border-radius: 60px;
-}
-
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
 	display: flex;
 	gap: 20px;
 	justify-content: center;
-}
-
-#portfolio h2 span{
-	display: flex;
-	align-items: center;
-	gap: 10px;
 }
 
 .gallery {
@@ -239,6 +193,42 @@ footer nav ul {
 	margin: 2em;
 }
 
+/* Filtres */
+.filter {
+	text-align: center;
+}
+
+.noClick{
+	font-family: 'Syne';
+	font-size: 16px;
+	font-weight: 700;
+	color: #1D6154;
+	background-color: white;
+	padding: 9px 21px ;
+	margin : 2em 10px ;
+	text-align: center;
+	border: solid 1px #1D6154;
+	border-radius: 60px;
+}
+
+.noClick:hover{
+	color: white;
+	background-color: #1D6154;
+}
+
+.click {
+	font-family: 'Syne';
+	font-size: 16px;
+	font-weight: 700;
+	color: white;
+	background-color: #1D6154;
+	padding: 9px 21px ;
+	margin : 2em 10px ;
+	text-align: center;
+	border: solid 1px #1D6154;
+	border-radius: 60px;
+}
+
 /* Mode édition */
 .editMode{
 	background-color: black;
@@ -251,17 +241,29 @@ footer nav ul {
 	gap: 10px;
 }
 
+li a {
+	text-decoration: none;
+	color: black;
+}
+
 .fa-pen-to-square {
 	width: 15px;
 	height: 15px;
 }
+
+#portfolio h2 span{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
 h2 a, h2 i {
 	color: black;
 	font-size: 14px;
 	text-decoration: none;
 }
 
-/*modale*/
+/*Modale*/
 /* *:focus {
 	box-shadow: 0 0 10px blue;
 }*/
@@ -294,24 +296,11 @@ h2 a, h2 i {
 	gap: 50px;
 }
 
-#modal2 {
-	gap: 30px;
-}
-
 .close-modal {
 	background-color: #ffff;
 	border: none;
 	display: flex;
 	justify-content: end;
-}
-
-.button-modal-2 {
-	display: flex;
-	justify-content: space-between;
-}
-
-.button-modal-2 a {
-	color: black;
 }
 
 .modal h1 {
@@ -320,6 +309,29 @@ h2 a, h2 i {
 	font-size: 26px;
 	font-weight: 400;
 	text-align: center;
+}
+
+#validate input,
+.validate input {
+	width: 237px;
+	height: 36px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+/*Modale vue 1 */
+.images {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 0 100px;
+}
+
+.images img {
+	height: 102px;
+	width: 76px;
 }
 
 .delete-work {
@@ -332,34 +344,56 @@ h2 a, h2 i {
 	margin-left: 54px;
 }
 
-.images {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	padding: 0 100px;
-}
-
-.images img {
-	height: 102px;
-	width: 76px;
-}
-
 #validate {
 	border-top: solid 1px #b3b3b3 ;
 	margin: 0 100px;
 }
 
-#validate input {
-	width: 237px;
-	height: 36px;
-	font-size: 1.2em;
-	border: none;
-	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+#modal2 {
+	gap: 30px;
 }
+
+/*Modale vue 2*/
+.button-modal-2 {
+	display: flex;
+	justify-content: space-between;
+}
+
+.button-modal-2 a {
+	color: black;
+}
+
+
+
+.add-work {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+
+
+
 
 .add-photo {
 	display: flex;
 	justify-content: center;
+}
+
+.fa-image {
+	position: relative;
+	top: 10px;
+	font-size: 76px;
+	color: rgba(185, 197, 204, 1);
+}
+
+.file {
+	position: relative;
+	top: 20px;
+	border-radius: 50px;
+	color: rgba(48, 102, 133, 1);
+	background-color: rgba(185, 197, 204, 1);
+	padding: 10px 40px;
+
 }
 
 .add-title-category {
@@ -390,11 +424,29 @@ h2 a, h2 i {
 	justify-content: center;
 }
 
-.p, button p {
+.p, .p p {
 	z-index: 0;
 }
 
-button input {
+.p input {
+	width: 178px;
+	position: relative;
+	bottom: 10px;
 	z-index: 1;
 	opacity: 0;
+}
+
+.p p {
+	font-size: 10px;
+}
+
+.validate input[type="submit"]{
+	font-family: 'Syne';
+	font-weight: 700;
+	color: white;
+	background-color: rgba(167, 167, 167, 1);
+	margin : 2em auto ;
+	width: 180px;
+	text-align: center;
+	border-radius: 60px;
 }
