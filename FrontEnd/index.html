@@ -75,7 +75,7 @@
 					<i class="fa-solid fa-xmark"></i>
 				</button>
 			</div>
-			<h1 id="title-modal">Galerie Photo</h1>
+			<h1>Galerie Photo</h1>
 			<div class="images">
 			</div>
 			<div  id="validate">
@@ -94,23 +94,26 @@
 				</button>
 			</div>
 			<h1>Ajout photo</h1>
-			<div class="add-photo">
-				<button class="p">
-					<i class="fa-regular fa-image"></i>
-					<input type="file">
-					<p>+ Ajouter photo</p>
-				</button>
-			</div>
-			<div class="add-title-category">	
-				<label for="title">Titre</label>
-				<input type="text" class="title" id="title">
-				<label for="category">Catégorie</label>
-				<select name="category" class="category">
-				</select>
-			</div>
-			<div id="validate">
-				<input type="submit" value="Valider">
-			</div>
+			<form action="#" method="" class="add-work">
+				<div class="add-photo">
+					<div class="p">
+						<i class="fa-regular fa-image"></i>
+						<label for="file" class="file">+ Ajouter photo</label>
+						<input type="file" name="file">
+						<p>jpg. png : 4 mo max</p>
+					</div>
+				</div>
+				<div class="add-title-category">	
+					<label for="title">Titre</label>
+					<input type="text" class="title" id="title">
+					<label for="category">Catégorie</label>
+					<select name="category" class="category">
+					</select>
+				</div>
+				<div class="validate" >
+					<input type="submit" value="Valider" >
+				</div>
+			</form>
 		</div>
 	</section>
 </body>
