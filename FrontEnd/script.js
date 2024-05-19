@@ -284,6 +284,15 @@ window.addEventListener("keydown", function (e) {
     };
 });
 
+async function respReload() {
+    const responseReload = await fetch("http://localhost:5678/api/works");
+    const workReload = await responseReload.json();
+    console.log(workReload);
+    generWorks(workReload);
+    console.log(workReload);
+
+}
+
 const deleteElement = document.querySelectorAll(".fa-trash-can")
 for (let i = 0; i<works.length; i++){
     deleteElement[i].addEventListener("click", async function (e) {
@@ -299,9 +308,8 @@ for (let i = 0; i<works.length; i++){
             if(respDelete.ok) {
                 console.log(respDelete);
                 this.closest(".work-img").remove();
-                location.reload(response);
-                // document.querySelector(".gallery").innerHTML = "";
-                // generWorks(works);
+                document.querySelector(".gallery").innerHTML = "";
+                respReload();
             };
         })
         .catch(error => console.error("Erreur lors de la suppression :", error));
