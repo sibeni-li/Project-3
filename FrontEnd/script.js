@@ -176,18 +176,19 @@ function generImg(works) {
 
 generImg(works);
 
-function generMdoalCategory(categories){
+function generModalCategory(categories){
     categories.forEach((categ) => {
         const selectCategory = document.querySelector(".category");
 
         const nameCategory = document.createElement("option");
         nameCategory.innerText = categ.name;
+        nameCategory.setAttribute("value", categ.id)
 
         selectCategory.appendChild(nameCategory);
     });
 };
 
-generMdoalCategory(categories);
+generModalCategory(categories);
 
 let modal = null;
 const modal1 = document.querySelector("#modal1");
@@ -315,3 +316,35 @@ for (let i = 0; i<works.length; i++){
         .catch(error => console.error("Erreur lors de la suppression :", error));
     });
 };
+
+function addWork(formData) {
+    fetch("http://localhost:5678/api/works", {
+        method: "POST",
+        headers: {
+            "accept" : "application/json",
+            "Authorization" : "Bearer " + token 
+        },
+        body: formData
+    })
+    .then(newWork => {
+        if(newWork.ok) {
+            document.querySelector(".gallery").innerHTML = ""
+            respReload()
+        }
+    })
+    .catch(error => console.error("Erreur lors de l'ajout :", error));
+
+}
+
+const form = document.querySelector(".add-work")
+form.addEventListener("submit", (e) => {
+    
+    e.preventDefault()
+    const formData = new FormData(form)
+    const fileUpload = document.querySelector(".file").files[0]
+    console.log(fileUpload)
+    
+    console.log(formData)
+    addWork(formData, fileUpload)
+    
+})
