@@ -94,20 +94,20 @@
 				</button>
 			</div>
 			<h1>Ajout photo</h1>
-			<form action="#" method="" class="add-work">
+			<form method="post" enctype="multipart/form-data" class="add-work">
 				<div class="add-photo">
 					<div class="p">
 						<i class="fa-regular fa-image"></i>
-						<label for="file" class="file">+ Ajouter photo</label>
-						<input type="file" name="file">
+						<label for="file" class="files">+ Ajouter photo</label>
+						<input type="file" id="file" class="file" name="image" accept="image/*"  required>
 						<p>jpg. png : 4 mo max</p>
 					</div>
 				</div>
 				<div class="add-title-category">	
-					<label for="title">Titre</label>
-					<input type="text" class="title" id="title">
+					<label for="title" >Titre</label>
+					<input type="text" name="title" class="title" id="title" required>
 					<label for="category">Catégorie</label>
-					<select name="category" class="category">
+					<select name="category" id="category" class="category" required>
 					</select>
 				</div>
 				<div class="validate" >
