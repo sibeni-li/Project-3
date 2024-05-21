@@ -386,7 +386,7 @@ h2 a, h2 i {
 	color: rgba(185, 197, 204, 1);
 }
 
-.file {
+.files {
 	position: relative;
 	top: 20px;
 	border-radius: 50px;
@@ -440,7 +440,7 @@ h2 a, h2 i {
 	font-size: 10px;
 }
 
-.validate input[type="submit"]{
+.validate input[type="submit"]:disabled{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
