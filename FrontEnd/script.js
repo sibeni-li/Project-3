@@ -288,13 +288,13 @@ window.addEventListener("keydown", function (e) {
 async function respReload() {
     const responseReload = await fetch("http://localhost:5678/api/works");
     const workReload = await responseReload.json();
-    console.log(workReload);
     generWorks(workReload);
+    generImg(workReload);
     console.log(workReload);
 
 }
 
-const deleteElement = document.querySelectorAll(".fa-trash-can")
+const deleteElement = document.querySelectorAll(".fa-trash-can");
 for (let i = 0; i<works.length; i++){
     deleteElement[i].addEventListener("click", async function (e) {
         e.preventDefault();
@@ -308,16 +308,24 @@ for (let i = 0; i<works.length; i++){
         .then(respDelete => {
             if(respDelete.ok) {
                 console.log(respDelete);
-                this.closest(".work-img").remove();
+                modal.querySelector(".images").innerHTML = "";
                 document.querySelector(".gallery").innerHTML = "";
                 respReload();
+            }else{
+                alert("Une erreur s'est produite lors de la suppression du projet.");
             };
         })
         .catch(error => console.error("Erreur lors de la suppression :", error));
     });
 };
 
-function addWork(formData) {
+const form = document.querySelector(".add-work");
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+    const fileUpload = document.querySelector(".file").files[0];
+    console.log(fileUpload);
+    
     fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {
@@ -328,23 +336,58 @@ function addWork(formData) {
     })
     .then(newWork => {
         if(newWork.ok) {
-            document.querySelector(".gallery").innerHTML = ""
-            respReload()
-        }
+            modal.querySelector(".images").innerHTML = "";
+            document.querySelector(".gallery").innerHTML = "";
+            respReload();
+        }else{
+            alert("Une erreur s'est produite lors de l'ajout du nouveau projet.");
+        };
     })
     .catch(error => console.error("Erreur lors de l'ajout :", error));
+});
 
-}
+function buttonValidateOn(){
+    console.log(document.querySelector(".title").value);
+    if(document.querySelector(".title").value !== ""){
+        document.getElementById("validation").removeAttribute("disabled");
+    }else{
+        document.getElementById("validation").setAttribute("disabled", "true");
+    };
+};
 
-const form = document.querySelector(".add-work")
-form.addEventListener("submit", (e) => {
-    
-    e.preventDefault()
-    const formData = new FormData(form)
-    const fileUpload = document.querySelector(".file").files[0]
-    console.log(fileUpload)
-    
-    console.log(formData)
-    addWork(formData, fileUpload)
-    
-})
+form.addEventListener("keydown", (e) =>{
+    buttonValidateOn();
+});
+
+form.addEventListener("click", (e) =>{
+    buttonValidateOn();
+});
+
+const inputFile = document.getElementById('file-input');
+const label = document.querySelector(".files")
+const iconImage = document.querySelector(".p i")
+const p = document.querySelector(".p p")
+const previewPhoto = () => {
+    const file = inputFile.files;
+    if (file) {
+        const fileReader = new FileReader();
+        const preview = document.getElementById('file-preview');
+        fileReader.onload = function (event) {
+            preview.setAttribute('src', event.target.result);
+        }
+        fileReader.readAsDataURL(file[0]);
+        preview.removeAttribute("hidden");
+        inputFile.setAttribute("hidden", "true");
+        label.setAttribute("hidden", "true");
+        iconImage.remove()
+        p.setAttribute("hidden", "true");
+    }else{
+        preview.setAttribute("hidden", "true");
+        inputFile.removeAttribute("hidden");
+        label.removeAttribute("hidden");
+        iconImage.removeAttribute("hidden");
+        p.removeAttribute("hidden");
+
+    };
+};
+inputFile.addEventListener("change", previewPhoto);
