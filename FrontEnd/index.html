@@ -21,7 +21,7 @@
 			<ul>
 				<li>projets</li>
 				<li>contact</li>
-				<li><a href="connexion.html">login</a></li>
+				<li class="login"><a href="connexion.html">login</a></li>
 				<li class="insta"><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -29,7 +29,7 @@
 	<main>
 		<section id="introduction">
 			<figure>
-				<img src="./assets/images/sophie-bluel.png" alt="">
+				<img src="./assets/images/sophie-bluel.png" alt="Photo de Sophie Bluel">
 			</figure>
 			<article>
 				<h2>Designer d'espace</h2>
@@ -75,13 +75,11 @@
 					<i class="fa-solid fa-xmark"></i>
 				</button>
 			</div>
-			<h1>Galerie Photo</h1>
+			<h2 id="title-modal">Galerie Photo</h2>
 			<div class="images">
 			</div>
 			<div  id="validate">
-				<a href="#modal2" class="js-modal2">
-					<input type="submit" value="Ajouter une photo">
-				</a>
+					<input type="submit" class="js-modal2" value="Ajouter une photo">
 			</div>
 		</div>
 		<div class="modal-wrapper js-modal-stop" id="modal2" style="display: none;">
@@ -93,12 +91,12 @@
 					<i class="fa-solid fa-xmark"></i>
 				</button>
 			</div>
-			<h1>Ajout photo</h1>
+			<h2>Ajout photo</h2>
 			<form method="post" enctype="multipart/form-data" class="add-work">
 				<div class="add-photo">
 					<div class="p">
 						<i class="fa-regular fa-image"></i>
-						<label for="file" class="files">+ Ajouter photo</label>
+						<label for="file-input" class="files">+ Ajouter photo</label>
 						<input type="file" id="file-input" class="file" name="image" accept="image/*" required>
 						<p>jpg. png : 4 mo max</p>
 						<img src="#" alt="Preview Uploaded Image" id="file-preview" hidden>

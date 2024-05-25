@@ -1,10 +1,10 @@
 //Récupère l'élément du DOM qui accueille le formulaire de connexion
-const form = document.getElementById("connexion")
+const form = document.getElementById("connexion");
 
 //Fonction qui appelle l'API et qui vérifie les identifiants de connexion
 function verifyLogin (username, password) {
-    const data = {"email": username, "password": password}
-    console.log(data)
+    const data = {"email": username, "password": password};
+    console.log(data);
 
     fetch("http://localhost:5678/api/users/login", {
         method: "POST",
@@ -18,23 +18,23 @@ function verifyLogin (username, password) {
     .then(data => {
         if (data.token){
             //Redirige vers la page d'accueil si la combinaison utilisateur/mdp est correcte et ajoute le token d'authentification au Local Storage
-            window.location.href = "index.html"
-            window.localStorage.setItem("token", data.token)
+            window.location.href = "index.html";
+            window.localStorage.setItem("token", data.token);
         }else {
             //Affiche un message d'erreur si la combinaison utilisateur/mdp est fausse
-            alert("Erreur dans l'identifiant ou le mot de passe")
+            alert("Erreur dans l'identifiant ou le mot de passe");
         }
     })
-    .catch(error => console.error('Error:', error))
-}
+    .catch(error => console.error('Error:', error));
+};
 
 //Récupère la valeur entrée par l'utilisateur et appelle la fonction verifyLogin à l'envoi du formulaire
 form.addEventListener("submit", (event) =>{
-    event.preventDefault()
-    const username = document.getElementById("email").value
-    const password = document.getElementById("password").value
-    console.log(username)
-    console.log(password)
-    verifyLogin(username, password)
+    event.preventDefault();
+    const username = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    console.log(username);
+    console.log(password);
+    verifyLogin(username, password);
     
-})
+});

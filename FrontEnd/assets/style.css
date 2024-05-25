@@ -48,7 +48,8 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1140px;
+	max-width: 1440px;
+	width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans';
 	font-size: 14px;
@@ -233,9 +234,11 @@ footer nav ul {
 /* Mode édition */
 .editMode{
 	background-color: black;
+	width: 1440px;
 	color: white;
 	height: 39px;
-	text-align: center;
+	position: relative;
+	right: 150px;
 	padding-top: 20px;
 	display: flex;
 	justify-content: center;
@@ -265,10 +268,6 @@ h2 a, h2 i {
 }
 
 /*Modale*/
-/* *:focus {
-	box-shadow: 0 0 10px blue;
-}*/
-
 .modal{
 	position: fixed;
 	display: flex;
@@ -304,7 +303,7 @@ h2 a, h2 i {
 	justify-content: end;
 }
 
-.modal h1 {
+.modal h2 {
 	color: black;
 	font-family: 'Work Sans';
 	font-size: 26px;

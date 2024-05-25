@@ -1,5 +1,5 @@
 //Récupération des données de l'API
-const response = await fetch("http://localhost:5678/api/works");
+const response = await fetch("http://localhost:5678/api/works/");
 console.log(response);
 const works = await response.json();
 console.log(works);
@@ -29,8 +29,8 @@ if(token){
     div.appendChild(p);
     header.before(div);
     
-    const navEdit = document.querySelector("nav li a");
-    navEdit.remove();
+    const navEdit = document.querySelector("nav .login");
+    navEdit.style.display = "none";
     const logout = document.createElement("li");
     const logOut = document.createElement("a");
     logOut.setAttribute("href", "index.html");
@@ -129,6 +129,7 @@ function generWorks(works) {
         
         const imageElement = document.createElement("img");
         imageElement.src = figure.imageUrl;
+        imageElement.alt = figure.title;
         
         const titleElement = document.createElement("figcaption");
         titleElement.innerText = figure.title;
@@ -148,14 +149,14 @@ function generWorks(works) {
 };
 
 generWorks(works);
-
+// Fonction qui génère les images de la modale qui permettent de supprimer des travaux
 function generImg(works) {
     works.forEach((image) =>{
         const divImages = document.querySelector(".images");
     
         const workImg = document.createElement("div");
         workImg.setAttribute("class", "work-img");
-        workImg.setAttribute('data-id', image.id)
+        workImg.setAttribute('data-id', image.id);
 
 
         const deleteWork = document.createElement("div");
@@ -166,6 +167,7 @@ function generImg(works) {
 
         const workImgElement = document.createElement("img");
         workImgElement.src = image.imageUrl;
+        workImgElement.alt = image.title;
 
         divImages.appendChild(workImg);
         workImg.appendChild(deleteWork);
@@ -176,13 +178,14 @@ function generImg(works) {
 
 generImg(works);
 
+// Fonction qui génère les différentes options de catégories dans la partie "Ajouter photo" de la modale
 function generModalCategory(categories){
     categories.forEach((categ) => {
         const selectCategory = document.querySelector(".category");
 
         const nameCategory = document.createElement("option");
         nameCategory.innerText = categ.name;
-        nameCategory.setAttribute("value", categ.id)
+        nameCategory.setAttribute("value", categ.id);
 
         selectCategory.appendChild(nameCategory);
     });
@@ -197,6 +200,7 @@ const focusableSelector= "button, a, input, textarea";
 let focusables =[];
 let previouslyFocusElement = null;
 
+// Fonction qui gère l'ouverture de la modale et son comportement une fois celle-ci ouverte
 const openModal = function (e) {
     e.preventDefault();
     modal = document.querySelector("#modal");
@@ -210,6 +214,7 @@ const openModal = function (e) {
     modal.querySelector(".js-modal-stop").addEventListener("click", stopPropagation);
 };
 
+// Fonction qui gère la fermeture de la modale
 const closeModal = function (e) {
     if (modal === null) return;
     if (previouslyFocusElement !== null) {
@@ -226,11 +231,12 @@ const closeModal = function (e) {
     
 };
 
-
+// Fonction qui stoppe la propagation des évènements afin que ceux-ci ne sétendent pas en dehors de la modale
 const stopPropagation = function (e) {
     e.stopPropagation();
 };
 
+// Fonction qui gère le déplacement du focus dans la modale avec shift
 const focusInModal = function (e){
     e.preventDefault();
     let index = focusables.findIndex(f => f === modal.querySelector(":focus"));
@@ -257,7 +263,7 @@ document.querySelectorAll(".js-close-modal").forEach(button => {
 });
 
 document.querySelectorAll(".js-modal2").forEach(button => {
-    button.addEventListener("click", (event) => {
+    button.addEventListener("click", () => {
         modal1.style.display = "none";
         modal2.style.display = "flex";
     });
@@ -285,70 +291,92 @@ window.addEventListener("keydown", function (e) {
     };
 });
 
+// Fonction qui appelle l'API et qui génère les travaux et les images de la modale
 async function respReload() {
-    const responseReload = await fetch("http://localhost:5678/api/works");
+    const responseReload = await fetch("http://localhost:5678/api/works/");
     const workReload = await responseReload.json();
     generWorks(workReload);
     generImg(workReload);
     console.log(workReload);
+    deleteWorks();
+};
 
-}
-
-const deleteElement = document.querySelectorAll(".fa-trash-can");
-for (let i = 0; i<works.length; i++){
-    deleteElement[i].addEventListener("click", async function (e) {
-        e.preventDefault();
-        fetch("http://localhost:5678/api/works/"+works[i].id , {
-            method : "DELETE",
-            headers : {
-                "accept": "*/*",
-                "Authorization": "Bearer " + token
-            }
-        })
-        .then(respDelete => {
-            if(respDelete.ok) {
-                console.log(respDelete);
-                modal.querySelector(".images").innerHTML = "";
-                document.querySelector(".gallery").innerHTML = "";
-                respReload();
-            }else{
-                alert("Une erreur s'est produite lors de la suppression du projet.");
-            };
-        })
-        .catch(error => console.error("Erreur lors de la suppression :", error));
+function deleteWorks(){
+    const deleteElement = document.querySelectorAll(".fa-trash-can");
+    deleteElement.forEach(element => {
+        element.addEventListener("click", async function (e) {
+            e.preventDefault();
+            const workId = this.closest(".work-img").dataset.id;
+            fetch("http://localhost:5678/api/works/" + workId, {
+                method: "DELETE",
+                headers: {
+                    "accept": "*/*",
+                    "Authorization": "Bearer " + token
+                }
+            })
+            .then(respDelete => {
+                if(respDelete.ok) {
+                    console.log(respDelete);
+                    // Mise à jour dynamique du DOM
+                    document.querySelector(".images").innerHTML = "";
+                    document.querySelector(".gallery").innerHTML = "";
+                    respReload();
+                    console.log(document.querySelector(".gallery"))
+                } else {
+                    alert("Une erreur s'est produite lors de la suppression du projet.");
+                };
+            })
+            .catch(error => console.error("Erreur lors de la suppression :", error));
+        });
     });
 };
 
+deleteWorks();
+
 const form = document.querySelector(".add-work");
-form.addEventListener("submit", (e) => {
+// Ecouteur d'évènement qui va créer un objet formData et l'envoyer en BD via l'API si l'objet est correctement envoyé
+form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(form);
     const fileUpload = document.querySelector(".file").files[0];
     console.log(fileUpload);
-    
-    fetch("http://localhost:5678/api/works", {
-        method: "POST",
-        headers: {
-            "accept" : "application/json",
-            "Authorization" : "Bearer " + token 
-        },
-        body: formData
-    })
-    .then(newWork => {
-        if(newWork.ok) {
-            modal.querySelector(".images").innerHTML = "";
+    try{
+        const fetchAdd = await fetch("http://localhost:5678/api/works/", {
+            method: "POST",
+            headers: {
+                "accept" : "application/json",
+                "Authorization" : "Bearer " + token 
+            },
+            body: formData
+        });
+        const respAdd = await fetchAdd.json();
+        console.log(respAdd.title)
+        if(fetchAdd.ok) {
+            closeModal(e);
+            document.querySelector(".images").innerHTML = "";
             document.querySelector(".gallery").innerHTML = "";
             respReload();
         }else{
             alert("Une erreur s'est produite lors de l'ajout du nouveau projet.");
-        };
-    })
-    .catch(error => console.error("Erreur lors de l'ajout :", error));
+        };  
+    }
+    catch
+    {error => console.error("Erreur lors de l'ajout :", error)};
+    document.getElementById('file-preview').src = "#";
+    document.querySelector(".file").files = undefined;
+    preview.setAttribute("hidden", "true");
+    inputFile.removeAttribute("hidden");
+    label.removeAttribute("hidden");
+    iconImage.style.display = "block";
+    p.removeAttribute("hidden");
+    form.reset();
 });
 
+// Activation ou désactivation du bouton valider en fonction de la valeur du champs titre
 function buttonValidateOn(){
     console.log(document.querySelector(".title").value);
-    if(document.querySelector(".title").value !== ""){
+    console.log(document.querySelector(".file").files[0])
+    if(document.querySelector(".title").value !== "" && document.querySelector(".file").files[0] !== undefined){
         document.getElementById("validation").removeAttribute("disabled");
     }else{
         document.getElementById("validation").setAttribute("disabled", "true");
@@ -367,11 +395,11 @@ const inputFile = document.getElementById('file-input');
 const label = document.querySelector(".files")
 const iconImage = document.querySelector(".p i")
 const p = document.querySelector(".p p")
+const preview = document.getElementById('file-preview');
 const previewPhoto = () => {
     const file = inputFile.files;
-    if (file) {
+    if (file && document.getElementById('file-preview').src !== "#") {
         const fileReader = new FileReader();
-        const preview = document.getElementById('file-preview');
         fileReader.onload = function (event) {
             preview.setAttribute('src', event.target.result);
         }
@@ -379,15 +407,8 @@ const previewPhoto = () => {
         preview.removeAttribute("hidden");
         inputFile.setAttribute("hidden", "true");
         label.setAttribute("hidden", "true");
-        iconImage.remove()
+        iconImage.style.display = "none"
         p.setAttribute("hidden", "true");
-    }else{
-        preview.setAttribute("hidden", "true");
-        inputFile.removeAttribute("hidden");
-        label.removeAttribute("hidden");
-        iconImage.removeAttribute("hidden");
-        p.removeAttribute("hidden");
-
-    };
+    }
 };
 inputFile.addEventListener("change", previewPhoto);
