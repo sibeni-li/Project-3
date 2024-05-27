@@ -4,7 +4,6 @@ const form = document.getElementById("connexion");
 //Fonction qui appelle l'API et qui vérifie les identifiants de connexion
 function verifyLogin (username, password) {
     const data = {"email": username, "password": password};
-    console.log(data);
 
     fetch("http://localhost:5678/api/users/login", {
         method: "POST",
@@ -33,8 +32,6 @@ form.addEventListener("submit", (event) =>{
     event.preventDefault();
     const username = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    console.log(username);
-    console.log(password);
     verifyLogin(username, password);
     
 });

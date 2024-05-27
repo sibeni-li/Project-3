@@ -257,8 +257,8 @@ document.querySelectorAll(".js-show-vue-1").forEach(button => {
     button.addEventListener("click", () => {
         modal1.style.display = "flex";
         modal2.style.display = "none";
-    })
-})
+    });
+});
 
 window.addEventListener("click", function (event) {
     if (event.target === document.querySelector(".modal")) {
@@ -331,7 +331,6 @@ form.addEventListener("submit", async function (e) {
             },
             body: formData
         });
-        const respAdd = await fetchAdd.json();
         if(fetchAdd.ok) {
             closeModal(e);
             document.querySelector(".images").innerHTML = "";
@@ -344,8 +343,7 @@ form.addEventListener("submit", async function (e) {
     }
     catch
     {error => console.error("Erreur lors de l'ajout :", error)};
-
-    document.getElementById('file-preview').src = "#";
+    
     document.querySelector(".file").files = undefined;
     document.getElementById("validation").setAttribute("disabled", "true");
     preview.setAttribute("hidden", "true");
@@ -374,9 +372,9 @@ form.addEventListener("click", (e) =>{
 });
 
 const inputFile = document.getElementById('file-input');
-const label = document.querySelector(".files")
-const iconImage = document.querySelector(".p i")
-const p = document.querySelector(".p p")
+const label = document.querySelector(".files");
+const iconImage = document.querySelector(".p i");
+const p = document.querySelector(".p p");
 const preview = document.getElementById('file-preview');
 
 // Fonction qui va afficher la preview de la photo avant l'envoie via l'API
@@ -386,13 +384,13 @@ const previewPhoto = () => {
         const fileReader = new FileReader();
         fileReader.onload = function (event) {
             preview.setAttribute('src', event.target.result);
-        }
+        };
         fileReader.readAsDataURL(file[0]);
         preview.removeAttribute("hidden");
         inputFile.setAttribute("hidden", "true");
         label.setAttribute("hidden", "true");
         iconImage.style.display = "none"
         p.setAttribute("hidden", "true");
-    }
+    };
 };
 inputFile.addEventListener("change", previewPhoto);
