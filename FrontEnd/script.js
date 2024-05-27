@@ -389,7 +389,7 @@ const previewPhoto = () => {
         preview.removeAttribute("hidden");
         inputFile.setAttribute("hidden", "true");
         label.setAttribute("hidden", "true");
-        iconImage.style.display = "none"
+        iconImage.style.display = "none";
         p.setAttribute("hidden", "true");
     };
 };
