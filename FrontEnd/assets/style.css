@@ -404,6 +404,7 @@ h2 a, h2 i {
 }
 
 .title, .category {
+	font-family: 'Work Sans';
 	height: 51px;
 	background-color: white;
 	border: none;

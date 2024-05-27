@@ -1,20 +1,15 @@
 //Récupération des données de l'API
 const response = await fetch("http://localhost:5678/api/works/");
-console.log(response);
 const works = await response.json();
-console.log(works);
 
 const respbis = await fetch("http://localhost:5678/api/categories/");
-console.log(respbis);
 const categories = await respbis.json();
-console.log(categories);
 
 //Récupération du token dans le Local Storage
 const token = window.localStorage.getItem("token");
 
 //Si le token est présent, mise à jour du html pour passer en mode édition. Si non, création des filtres
 if(token){
-    console.log(token);
 
     const body = document.querySelector("body");
     const header = document.querySelector("header");
@@ -107,20 +102,15 @@ if(token){
             const filter = createFilterButton(input.name, false);
             filters.appendChild(filter);
         });
-    }
-    
-    function filters(categories) {
-        createFilters(categories);
     };
     
-    filters(categories);
+    createFilters(categories);
     
 };
 
 //Fonction qui va générer les travaux
 function generWorks(works) {
     works.forEach((figure) => {
-        console.log(figure);
         //Récupère l'élément du DOM qui va accueillir les travaux de l'architecte
         const divGallery = document.querySelector(".gallery");
         //Crée une balise dédiée à un des travaux
@@ -138,17 +128,11 @@ function generWorks(works) {
         //Rattache l'image et le titre à la balise figure
         worksElement.appendChild(imageElement);
         worksElement.appendChild(titleElement);
-        
-        console.log(worksElement);
-        console.log(imageElement);
-        console.log(titleElement);
-        
-        const categoryId = figure.category;
-        console.log(categoryId);
     });
 };
 
 generWorks(works);
+
 // Fonction qui génère les images de la modale qui permettent de supprimer des travaux
 function generImg(works) {
     works.forEach((image) =>{
@@ -295,12 +279,13 @@ window.addEventListener("keydown", function (e) {
 async function respReload() {
     const responseReload = await fetch("http://localhost:5678/api/works/");
     const workReload = await responseReload.json();
+
     generWorks(workReload);
     generImg(workReload);
-    console.log(workReload);
     deleteWorks();
 };
 
+// Fonction qui va supprimer le projet au click sur la poubelle associée
 function deleteWorks(){
     const deleteElement = document.querySelectorAll(".fa-trash-can");
     deleteElement.forEach(element => {
@@ -316,12 +301,10 @@ function deleteWorks(){
             })
             .then(respDelete => {
                 if(respDelete.ok) {
-                    console.log(respDelete);
                     // Mise à jour dynamique du DOM
                     document.querySelector(".images").innerHTML = "";
                     document.querySelector(".gallery").innerHTML = "";
                     respReload();
-                    console.log(document.querySelector(".gallery"))
                 } else {
                     alert("Une erreur s'est produite lors de la suppression du projet.");
                 };
@@ -338,8 +321,7 @@ const form = document.querySelector(".add-work");
 form.addEventListener("submit", async function (e) {
     e.preventDefault();
     const formData = new FormData(form);
-    const fileUpload = document.querySelector(".file").files[0];
-    console.log(fileUpload);
+
     try{
         const fetchAdd = await fetch("http://localhost:5678/api/works/", {
             method: "POST",
@@ -350,20 +332,22 @@ form.addEventListener("submit", async function (e) {
             body: formData
         });
         const respAdd = await fetchAdd.json();
-        console.log(respAdd.title)
         if(fetchAdd.ok) {
             closeModal(e);
             document.querySelector(".images").innerHTML = "";
             document.querySelector(".gallery").innerHTML = "";
             respReload();
+            
         }else{
             alert("Une erreur s'est produite lors de l'ajout du nouveau projet.");
         };  
     }
     catch
     {error => console.error("Erreur lors de l'ajout :", error)};
+
     document.getElementById('file-preview').src = "#";
     document.querySelector(".file").files = undefined;
+    document.getElementById("validation").setAttribute("disabled", "true");
     preview.setAttribute("hidden", "true");
     inputFile.removeAttribute("hidden");
     label.removeAttribute("hidden");
@@ -374,8 +358,6 @@ form.addEventListener("submit", async function (e) {
 
 // Activation ou désactivation du bouton valider en fonction de la valeur du champs titre
 function buttonValidateOn(){
-    console.log(document.querySelector(".title").value);
-    console.log(document.querySelector(".file").files[0])
     if(document.querySelector(".title").value !== "" && document.querySelector(".file").files[0] !== undefined){
         document.getElementById("validation").removeAttribute("disabled");
     }else{
@@ -396,6 +378,8 @@ const label = document.querySelector(".files")
 const iconImage = document.querySelector(".p i")
 const p = document.querySelector(".p p")
 const preview = document.getElementById('file-preview');
+
+// Fonction qui va afficher la preview de la photo avant l'envoie via l'API
 const previewPhoto = () => {
     const file = inputFile.files;
     if (file && document.getElementById('file-preview').src !== "#") {
