@@ -164,9 +164,13 @@ generImg(works);
 
 // Fonction qui génère les différentes options de catégories dans la partie "Ajouter photo" de la modale
 function generModalCategory(categories){
-    categories.forEach((categ) => {
-        const selectCategory = document.querySelector(".category");
 
+    const selectCategory = document.querySelector(".category");
+
+    const nameEmpty = document.createElement("option");
+    selectCategory.appendChild(nameEmpty);
+
+    categories.forEach((categ) => {
         const nameCategory = document.createElement("option");
         nameCategory.innerText = categ.name;
         nameCategory.setAttribute("value", categ.id);
